@@ -44,13 +44,12 @@ class CertificationController extends Controller
     // Descriptografa e processa o certificado
     $certInfo = openssl_x509_parse(openssl_x509_read($x509certdata['cert']));
 
-    // Salvar os dados do certificado no banco de dados
+    // Salva os dados do certificado no banco de dados
     $certification = new Certification();
     $certification->name = $certInfo['name'];
     $certification->validTo_time_t = date('Y-m-d', $certInfo['validTo_time_t']);
     $certification->cnpj_cpf = $certInfo['subject']['CN'];
     $certification->save();
-
 
     return redirect()->route('certification.index')->with('success', 'Certificado salvo com sucesso!');
  }
