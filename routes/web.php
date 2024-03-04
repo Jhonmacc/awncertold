@@ -20,4 +20,6 @@ Route::get('/', function () {
 
 
 Route::get('/certification', [CertificationController::class, 'index'])->name('certification.index');
+
 Route::post('/certification/validate', [CertificationController::class, 'validateCertification'])->name('certification.validate');
+
