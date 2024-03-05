@@ -17,10 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/testes', function () {
-    return view('testes');
-})->name('testes');
 
-Route::get('/certification', [CertificationController::class, 'index'])->name('certification.index');
-Route::post('/certification/validate', [CertificationController::class, 'validateCertification'])->name('certification.validate');
-Route::delete('/certification/{id}/destroy', [CertificationController::class, 'destroy'])->name('certification.destroy');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/certification', [CertificationController::class, 'index'])->name('certification.index');
+    Route::post('/certification/validate', [CertificationController::class, 'validateCertification'])->name('certification.validate');
+    Route::delete('/certification/{id}/destroy', [CertificationController::class, 'destroy'])->name('certification.destroy');
+//Rotas de Testes
+    Route::get('/testes', function () {
+        return view('testes');
+    })->name('testes');
+});

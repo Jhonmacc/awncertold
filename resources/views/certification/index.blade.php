@@ -1,6 +1,14 @@
-@extends('layouts.app')
-
+@extends('layouts.certControl')
 @section('content')
+<!-- Styles -->
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<hr>
     <div class="container">
         <h2>Controle de Certificados</h2>
 
@@ -67,7 +75,8 @@
         </div>
         <hr>
         <legend class="badge text-bg-primary span12" style="font-size: 18px;" for="">Lista de Certificados</legend>
-        <table id="certificates-table" class="table table-striped table-bordered" style="width:100%">
+        <fieldset>
+        <table id="certificates-table" class="table table-sm table-striped  table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th>Ações</th>
@@ -93,7 +102,7 @@
                         <tr>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    <button class="btn btn-primary dropdown-toggle" type="button"
                                         id="dropdownMenuButton{{ $certificate->id }}" data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                         Ações
@@ -115,14 +124,19 @@
                 @endif
             </tbody>
         </table>
+    </fieldset>
     </div>
+    <hr>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert@2"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#certificates-table').DataTable();
-
+        var table = new DataTable('#certificates-table', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/2.0.1/i18n/pt-BR.json',
+    },
+});
             $(document).on('click', '.delete-btn', function(e) {
                 e.preventDefault(); // Previne a ação padrão do link
                 var id = $(this).data('id');
